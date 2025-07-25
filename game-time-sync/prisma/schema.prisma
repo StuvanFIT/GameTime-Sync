@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+//The prisma client stores the type definitions (i.e. User: id, email, password) in the mode modules
+//Note that we do not commit the node modules folder right? So when we go to deploy our application and it runs "build"
+//one of the first things before doing a npm run build is to reinstall the type definitions. So in package.json, we do primsa generate
+//to install all the type defintions.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {  
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  name      String?
+}
